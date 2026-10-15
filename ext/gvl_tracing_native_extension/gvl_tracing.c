@@ -156,6 +156,10 @@ void Init_gvl_tracing_native_extension(void) {
   initialize_timeslice_meta();
 
   direct_bind_initialize(gvl_tracing_module, true);
+
+  // Compilation error in ruby 4.x:
+  // gvl_tracing.c:159:19: error: incompatible function pointer types assigning to 'VALUE (*)(VALUE)'
+  //   (aka 'unsigned long (*)(unsigned long)') from 'VALUE (*)(void)' (aka 'unsigned long (*)(void)')
   is_thread_alive = (VALUE (*)(VALUE)) direct_bind_get_cfunc_with_arity(rb_cThread, rb_intern("alive?"), 0, true).func;
 }
 
