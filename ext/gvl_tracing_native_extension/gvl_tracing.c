@@ -156,7 +156,7 @@ void Init_gvl_tracing_native_extension(void) {
   initialize_timeslice_meta();
 
   direct_bind_initialize(gvl_tracing_module, true);
-  is_thread_alive = direct_bind_get_cfunc_with_arity(rb_cThread, rb_intern("alive?"), 0, true).func;
+  is_thread_alive = (VALUE (*)(VALUE)) direct_bind_get_cfunc_with_arity(rb_cThread, rb_intern("alive?"), 0, true).func;
 }
 
 static inline void initialize_timeslice_meta(void) {
